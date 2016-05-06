@@ -26,14 +26,16 @@ ECHO 1 - WMIC and Net Use Based Exploration
 ECHO 2 - Search home directory for upper and lower instances of the string "pass"
 ECHO 3 - Specify a string to use for searching
 ECHO 4 - Load Credentials for NET USE commands
-ECHO 5 - Exit
+ECHO 5 - Network Based Discovery
+ECHO 6 - Exit
 ECHO.
 SET /P M=Type 1, 2, 3, 4, or 5 then press ENTER:
 IF %M%==1 GOTO WMICStuff
 IF %M%==2 GOTO PASS
 IF %M%==3 GOTO STRING
 IF %M%==4 GOTO LOADCREDS
-IF %M%==5 GOTO EOF
+IF %M%==5 GOTO NET_DISCOVERY
+IF %M%==6 GOTO EOF
 
 :WMICStuff
 ECHO.
@@ -179,4 +181,34 @@ ECHO.
 PAUSE
 GOTO MENU
 
+
+
+:NET_DISCOVERY
+ECHO.
+ECHO.
+ECHO  Let's poke around.  Some of this will be passive, some invasive.  
+ECHO  I'll try to mark which is which.
+ECHO.
+ECHO 1 - List the current ARP cache
+ECHO 2 - Specify the remote location
+ECHO 3 - Specify a share at the remote location
+ECHO 4 - Specify the domain
+ECHO 5 - Map Drive
+ECHO 6 - Return to main menu
+SET /P M=Type 1, 2, 3, or 4 then press ENTER:
+IF %M%==1 GOTO ARPC_READ
+IF %M%==2 GOTO 
+IF %M%==3 GOTO 
+IF %M%==4 GOTO 
+IF %M%==5 GOTO 
+IF %M%==6 GOTO MENU
+
+	:ARPC_READ
+	arp -a
+	PAUSE
+	GOTO NET_DISCOVERY
+
+PAUSE
 GOTO MENU
+
+GOT MENU
